@@ -28,7 +28,10 @@ const Reset = () => {
                 type="text"
                 placeholder="Repeat Password"
               />
-              <button className={styles.btn} type="submit">
+              <button
+                className="border bg-indigo-500 w-3/4 py-4 rounded-lg text-gray-50 text-xl shadow-sm text-center hover:bg-[#ff6a6a]"
+                type="submit"
+              >
                 Reset
               </button>
             </div>
