@@ -1,0 +1,37 @@
+{
+  "name": "login-reg-opt-server",
+  "version": "1.0.0",
+  "description": "login and registration otp verification mern stack",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"npm start --prefix ../client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohit838/GhostRio-PlayGround.git"
+  },
+  "keywords": [
+    "Login",
+    "Registration",
+    "OTP",
+    "Verifiation",
+    "JWT",
+    "MERN"
+  ],
+  "author": "Mohitul Islam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohit838/GhostRio-PlayGround/issues"
+  },
+  "homepage": "https://github.com/mohit838/GhostRio-PlayGround#readme",
+  "dependencies": {
+    "concurrently": "^8.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
+  }
+}
