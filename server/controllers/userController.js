@@ -2,9 +2,7 @@ import { hashedYourPassowrd, jwtTokenCreate } from '../helper/helper.js';
 import UserModel from '../models/UserModel.js';
 
 export const registerUser = async (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-
+  // TODO: User Email, Moblie Validation Needed
   const { name, mobile, userType, email, password } = req.body;
 
   const isEmail = await UserModel.findOne({ email });
