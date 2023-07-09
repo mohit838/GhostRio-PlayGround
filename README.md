@@ -13,3 +13,7 @@ My Own Playground
 ### For Sever Side
 
         npm i express nodemon dotenv cors concurrently bcrypt jsonwebtoken mailgen mongodb-memory-server mongoose morgan multer nodemailer otp-generator
+
+### Random Base64 Value For All Secrect Keys CMD
+
+        openssl rand -base64 32
