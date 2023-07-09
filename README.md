@@ -2,6 +2,10 @@
 
 My Own Playground
 
+## SECRET KEY RANDOM GENERATOR
+
+    openssl rand -base64 32
+
 ## Basic Configuation For Backend
 
         /* CONFIGURATIONS */

@@ -26,7 +26,7 @@ export const UserSchema = new mongoose.Schema({
     unique: true,
   },
   userType: {
-    type: Number,
+    type: Boolean,
     required: true,
   },
 });
