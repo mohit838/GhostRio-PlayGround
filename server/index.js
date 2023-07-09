@@ -3,9 +3,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
-import mongoose from 'mongoose';
 import morgan from 'morgan';
 import multer from 'multer';
+import connect from './database/db.js';
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -32,14 +32,9 @@ const upload = multer({ storage });
 
 /* ALL ROUTES */
 
-/* MONGOOSE SETUP */
+/* MONGOOSE AND SERVER SETUP */
 const PORT = process.env.PORT || 5000;
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-  })
-  .catch((error) => console.log(`${error} did not connect`));
+
+connect().then(() => {
+  app.listen(PORT, () => console.log(`Server Running On Port: ${PORT}`));
+});
