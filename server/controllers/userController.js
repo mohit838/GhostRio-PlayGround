@@ -1,5 +1,12 @@
-import { hashedYourPassowrd, jwtTokenCreate } from '../helper/helper.js';
-import UserModel from '../models/UserModel.js';
+import { hashedYourPassowrd, jwtTokenCreate } from "../helper/helper.js";
+import UserModel from "../models/UserModel.js";
+
+/**
+ * API: http://localhost:5000/api/register
+ * @param {'name': 'this is name', 'email': 'abc@abstract.com',.....} req
+ * @param {"success": true, "msg": "You account has been created.", "token": ey..."} res
+ * @returns
+ */
 
 export const registerUser = async (req, res) => {
   // TODO: User Email, Moblie Validation Needed
@@ -25,12 +32,12 @@ export const registerUser = async (req, res) => {
 
       return res
         .status(201)
-        .json({ success: true, msg: 'You account has been created.', token });
+        .json({ success: true, msg: "You account has been created.", token });
     } else {
       return res.status(401).json({
         success: false,
         msg: `${email} OR ${mobile} is already taken!`,
-        param: 'email or mobile',
+        param: "email or mobile",
       });
     }
   } catch (error) {
