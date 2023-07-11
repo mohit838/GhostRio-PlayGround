@@ -1,11 +1,12 @@
-import { hashedYourPassowrd, jwtTokenCreate } from "../helper/helper.js";
+import {
+  hashedYourPassowrd,
+  jwtTokenCreate,
+  matchingPassword,
+} from "../helper/helper.js";
 import UserModel from "../models/UserModel.js";
 
 /**
  * API: http://localhost:5000/api/register
- * @param {'name': 'this is name', 'email': 'abc@abstract.com',.....} req
- * @param {"success": true, "msg": "You account has been created.", "token": ey..."} res
- * @returns
  */
 
 export const registerUser = async (req, res) => {
@@ -37,10 +38,46 @@ export const registerUser = async (req, res) => {
       return res.status(401).json({
         success: false,
         msg: `${email} OR ${mobile} is already taken!`,
-        param: "email or mobile",
+        param: "email",
       });
     }
   } catch (error) {
     res.status(400).send(error.message);
+  }
+};
+
+/**
+ * API: http://localhost:5000/api/login
+ */
+export const loginUser = async (req, res) => {
+  // TODO: User Email, Password Validation Needed
+  const { email, password } = req.body;
+
+  const isUser = await UserModel.findOne({ email });
+
+  try {
+    if (isUser) {
+      if (await matchingPassword(password, isUser.password)) {
+        // @JWT token
+        const token = jwtTokenCreate({ id: isUser._id, name: isUser.name });
+
+        if (isUser.userType) {
+          return res.status(200).json({ token, userType: true });
+        } else {
+          return res.status(200).json({ token, userType: false });
+        }
+      } else {
+        return res.status(401).json({
+          errors: [{ msg: "Password not matched!", param: "password" }],
+        });
+      }
+    } else {
+      return res.status(401).json({
+        errors: [{ msg: `${email} is not found!`, param: "email" }],
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Server Inernal error!");
   }
 };

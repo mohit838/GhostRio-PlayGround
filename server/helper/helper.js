@@ -17,6 +17,11 @@ export const hashedYourPassowrd = async (password) => {
   }
 };
 
+// @For Matching password
+export const matchingPassword = async (password, dbPassword) => {
+  return await bcrypt.compare(password, dbPassword);
+};
+
 // @For JWT token generation
 export const jwtTokenCreate = (user) => {
   return jsonwebtoken.sign(user, process.env.JWT_CODE, {
