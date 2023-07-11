@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import connect from "./database/db.js";
+import userDashboardRouters from "./routes/userDashboardRoutes.js";
 import userRouters from "./routes/userRoutes.js";
 
 /* CONFIGURATIONS */
@@ -15,6 +16,7 @@ app.use(cors());
 
 /* ALL ROUTES */
 app.use("/api", userRouters);
+app.use("/api", userDashboardRouters);
 
 /* MONGOOSE AND SERVER SETUP */
 const PORT = process.env.PORT || 5000;
