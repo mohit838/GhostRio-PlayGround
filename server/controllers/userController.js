@@ -62,18 +62,25 @@ export const loginUser = async (req, res) => {
         const token = jwtTokenCreate({ id: isUser._id, name: isUser.name });
 
         if (isUser.userType) {
-          return res.status(200).json({ token, userType: true });
+          // If you want pass any kinds of users data from DB
+          return res.status(200).json({ token, userType: true, success: true });
         } else {
-          return res.status(200).json({ token, userType: false });
+          return res
+            .status(200)
+            .json({ token, userType: false, success: false });
         }
       } else {
         return res.status(401).json({
-          errors: [{ msg: "Password not matched!", param: "password" }],
+          errors: [
+            { msg: "Password not matched!", param: "password", success: false },
+          ],
         });
       }
     } else {
       return res.status(401).json({
-        errors: [{ msg: `${email} is not found!`, param: "email" }],
+        errors: [
+          { msg: `${email} is not found!`, param: "email", success: false },
+        ],
       });
     }
   } catch (error) {
