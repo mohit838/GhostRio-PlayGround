@@ -6,9 +6,8 @@ import {
 import UserModel from "../models/UserModel.js";
 
 /**
- * API: http://localhost:5000/api/register
+ * API: http://localhost:5000/api/auth/register
  */
-
 export const registerUser = async (req, res) => {
   // TODO: User Email, Moblie Validation Needed
   const { name, mobile, userType, email, password } = req.body;
@@ -47,7 +46,7 @@ export const registerUser = async (req, res) => {
 };
 
 /**
- * API: http://localhost:5000/api/login
+ * API: http://localhost:5000/api/auth/login
  */
 export const loginUser = async (req, res) => {
   // TODO: User Email, Password Validation Needed

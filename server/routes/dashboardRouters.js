@@ -1,5 +1,5 @@
 import express from "express";
-import { dashboardHome } from "../controllers/dashboardController.js";
+import { dashboardHome } from "../controllers/dashboardControllers.js";
 import { Auth } from "../helper/auth.js";
 
 const router = express.Router();

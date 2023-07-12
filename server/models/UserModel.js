@@ -1,19 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please provide a name.'],
+    required: [true, "Please provide a name."],
     unique: false,
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password.'],
+    required: [true, "Please provide a password."],
     unique: false,
   },
   email: {
     type: String,
-    required: [true, 'Please provide a unique email.'],
+    required: [true, "Please provide a unique email."],
     unique: true,
   },
   image: {
@@ -22,13 +22,14 @@ export const UserSchema = new mongoose.Schema({
   },
   mobile: {
     type: Number,
-    required: [true, 'Please provide a unique mobile number.'],
+    required: [true, "Please provide a unique mobile number."],
     unique: true,
   },
-  userType: {
+  isAdmin: {
     type: Boolean,
     required: true,
+    default: false,
   },
 });
 
-export default mongoose.model.Users || mongoose.model('User', UserSchema);
+export default mongoose.model.Users || mongoose.model("User", UserSchema);
