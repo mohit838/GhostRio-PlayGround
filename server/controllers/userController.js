@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import {
   hashedYourPassowrd,
   jwtTokenCreate,
@@ -10,7 +11,10 @@ import UserModel from "../models/UserModel.js";
  */
 export const registerUser = async (req, res) => {
   // TODO: User Email, Moblie Validation Needed
-  const { name, mobile, userType, email, password } = req.body;
+  const errors = validationResult(req);
+
+  console.log(errors);
+  const { name, email, password, mobile, userType } = req.body;
 
   const isEmail = await UserModel.findOne({ email });
   const isMobile = await UserModel.findOne({ mobile });
