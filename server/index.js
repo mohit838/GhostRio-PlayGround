@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import connect from "./database/db.js";
-import userDashboardRouters from "./routes/userDashboardRoutes.js";
+import dashboardRouters from "./routes/dashboardRouters.js";
 import userRouters from "./routes/userRoutes.js";
 
 /* CONFIGURATIONS */
@@ -15,8 +15,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 /* ALL ROUTES */
-app.use("/api", userRouters);
-app.use("/api", userDashboardRouters);
+app.use("/api/auth", userRouters);
+app.use("/api/user", dashboardRouters);
 
 /* MONGOOSE AND SERVER SETUP */
 const PORT = process.env.PORT || 5000;
