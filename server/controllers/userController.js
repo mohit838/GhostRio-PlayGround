@@ -1,7 +1,9 @@
+import randomstring from "randomstring";
 import {
   hashedYourPassowrd,
   jwtTokenCreate,
   matchingPassword,
+  resetPasswordMail,
 } from "../helper/helper.js";
 import UserModel from "../models/UserModel.js";
 
@@ -87,7 +89,7 @@ export const loginUser = async (req, res) => {
 };
 
 /**
- * API: http://localhost:5000/api/auth//update-password
+ * API: http://localhost:5000/api/auth/update-password
  */
 export const updatePassword = async (req, res) => {
   const { userId, password } = req.body;
@@ -104,7 +106,7 @@ export const updatePassword = async (req, res) => {
         const newHashPassword = await hashedYourPassowrd(password);
 
         const updateUserPassword = await UserModel.findByIdAndUpdate(
-          { _id: isUser._id },
+          isUser._id,
           {
             $set: {
               password: newHashPassword,
@@ -137,7 +139,10 @@ export const updatePassword = async (req, res) => {
   }
 };
 
-export const resetPassword = async (req, res) => {
+/**
+ * API: http://localhost:5000/api/auth/forgot-password
+ */
+export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -149,13 +154,83 @@ export const resetPassword = async (req, res) => {
   try {
     if (isEmail) {
       // Forgot password functions
-      
+      const randomStringValue = randomstring.generate();
 
+      const updateToken = await UserModel.updateOne(
+        { email },
+        { $set: { isToken: randomStringValue } }
+      );
+
+      const sendingMail = resetPasswordMail(
+        isEmail.name,
+        isEmail.email,
+        randomStringValue
+      );
+
+      return res.status(200).json({
+        errors: [
+          {
+            msg: "Check Your Email For Details!",
+            param: "password",
+            success: true,
+          },
+        ],
+      });
     } else {
       return res.status(401).json({
         errors: [
           { msg: `${email} is not found!`, param: "email", success: false },
         ],
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Server Inernal error!");
+  }
+};
+
+/**
+ * API: http://localhost:5000/api/auth/reset-password
+ */
+export const resetPassword = async (req, res) => {
+  const { token } = req.query;
+  const { password } = req.body;
+
+  if (!token || token === null) {
+    return res.status(404).json("Invalid Token!");
+  }
+
+  try {
+    if (token) {
+      // Reset Password Code
+      const checkToken = await UserModel.findOne({ isToken: token });
+
+      if (checkToken) {
+        const hashGetNewPass = await hashedYourPassowrd(password);
+
+        const resetPasswordField = await UserModel.findByIdAndUpdate(
+          checkToken._id,
+          { $set: { password: hashGetNewPass, isToken: "" } },
+          { new: true }
+        );
+
+        return res.status(200).json({
+          errors: [
+            {
+              msg: "Password change successfully!",
+              param: "password",
+              success: true,
+            },
+          ],
+        });
+      } else {
+        return res.status(404).json({
+          errors: [{ msg: `Link Expired!`, param: "email", success: false }],
+        });
+      }
+    } else {
+      return res.status(404).json({
+        errors: [{ msg: `Link Expired!`, param: "email", success: false }],
       });
     }
   } catch (error) {

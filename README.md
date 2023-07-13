@@ -92,9 +92,14 @@ These are just a few examples of MongoDB commands and operations. MongoDB provid
 
     try {
         if (isValuel) {
-          // Main Functionalities
+          //Other Functionalities
 
 
+          return res.status(200).json({
+                  errors: [
+                    { msg: "Custom Msg!", param: "fieldName", success: true },
+                  ],
+          });
         } else {
           return res.status(401).json({
             errors: [

@@ -30,6 +30,11 @@ export const UserSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  isToken: {
+    type: String,
+    required: false,
+    default: "",
+  },
 });
 
 export default mongoose.model.Users || mongoose.model("User", UserSchema);

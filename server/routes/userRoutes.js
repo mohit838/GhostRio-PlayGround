@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  forgotPassword,
   loginUser,
   registerUser,
   resetPassword,
@@ -14,6 +15,7 @@ router
   .post("/register", upload.single("profileImage"), registerUser)
   .post("/login", loginUser)
   .post("/update-password", Auth.authorized, updatePassword)
-  .post("/reset-password", Auth.authorized, resetPassword);
+  .post("/forgot-password", forgotPassword)
+  .get("/reset-password", resetPassword);
 
 export default router;

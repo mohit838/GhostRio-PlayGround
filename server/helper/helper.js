@@ -2,12 +2,13 @@ import bcrypt from "bcrypt";
 import express from "express";
 import jsonwebtoken from "jsonwebtoken";
 import multer from "multer";
-import { JWT_CODE } from "../config/envConfig.js";
+import nodemailer from "nodemailer";
+import { BACKEND, EMAIL, JWT_CODE, PASSWORD } from "../config/envConfig.js";
 
 const app = express();
 app.use(express.static("public"));
 
-// For Hashing Password
+//@For Hashing Password
 export const hashedYourPassowrd = async (password) => {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -30,7 +31,7 @@ export const jwtTokenCreate = (user) => {
   });
 };
 
-/* FILE STORAGE */
+//@FOR fILE STORAGE
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/assets");
@@ -41,3 +42,39 @@ const storage = multer.diskStorage({
   },
 });
 export const upload = multer({ storage });
+
+//@FOR MAIL GENERATORS
+export const resetPasswordMail = async (name, email, token) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: EMAIL,
+        pass: PASSWORD,
+      },
+    });
+
+    const mailBody = {
+      from: EMAIL,
+      to: email,
+      subject: "Your Reset Password Confirmation Mail",
+      html: `<p>Hi ${name}, </br> Here is your reset password link <a href="${BACKEND}api/auth/reset-password?token=${token}">Reset Password</a></p>`,
+    };
+
+    transporter.sendMail(mailBody, function (err, info) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Mail has been sent!!", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Server Inernal error!");
+  }
+};
+
+("http://localhost:5000/api/auth/reset-password?token=${token}");
