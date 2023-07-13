@@ -87,3 +87,22 @@ My Own Playground
    - `bulkWrite`: Performs multiple write operations in bulk.
 
 These are just a few examples of MongoDB commands and operations. MongoDB provides a rich set of commands and features to interact with the database, and the available commands may vary depending on the MongoDB version and the specific driver or framework you are using. It's recommended to refer to the official MongoDB documentation for a comprehensive list of commands and their usage details.
+
+## Base Template For Controllers
+
+    try {
+        if (isValuel) {
+          // Main Functionalities
+
+
+        } else {
+          return res.status(401).json({
+            errors: [
+              { msg: `${isValuel} is not found!`, param: "isValuel", success: false },
+            ],
+          });
+        }
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json("Server Inernal error!");
+      }

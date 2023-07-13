@@ -2,6 +2,7 @@ import express from "express";
 import {
   loginUser,
   registerUser,
+  resetPassword,
   updatePassword,
 } from "../controllers/userController.js";
 import { Auth } from "../helper/auth.js";
@@ -12,6 +13,7 @@ const router = express.Router();
 router
   .post("/register", upload.single("profileImage"), registerUser)
   .post("/login", loginUser)
-  .post("/update-password", Auth.authorized, updatePassword);
+  .post("/update-password", Auth.authorized, updatePassword)
+  .post("/reset-password", Auth.authorized, resetPassword);
 
 export default router;

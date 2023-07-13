@@ -136,3 +136,30 @@ export const updatePassword = async (req, res) => {
     return res.status(500).json("Server Inernal error!");
   }
 };
+
+export const resetPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(404).json("Email Shouldn't be empty!");
+  }
+
+  const isEmail = await UserModel.findOne({ email });
+
+  try {
+    if (isEmail) {
+      // Forgot password functions
+      
+
+    } else {
+      return res.status(401).json({
+        errors: [
+          { msg: `${email} is not found!`, param: "email", success: false },
+        ],
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Server Inernal error!");
+  }
+};
