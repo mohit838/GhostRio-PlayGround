@@ -16,7 +16,7 @@ export const UserSchema = new mongoose.Schema({
     required: [true, "Please provide a unique email."],
     unique: true,
   },
-  image: {
+  profileImage: {
     type: String,
     required: true,
   },

@@ -1,4 +1,3 @@
-import { validationResult } from "express-validator";
 import {
   hashedYourPassowrd,
   jwtTokenCreate,
@@ -10,10 +9,6 @@ import UserModel from "../models/UserModel.js";
  * API: http://localhost:5000/api/auth/register
  */
 export const registerUser = async (req, res) => {
-  // TODO: User Email, Moblie Validation Needed
-  const errors = validationResult(req);
-
-  console.log(errors);
   const { name, email, password, mobile, userType } = req.body;
 
   const isEmail = await UserModel.findOne({ email });
@@ -27,7 +22,7 @@ export const registerUser = async (req, res) => {
         name,
         email,
         mobile,
-        image: req.file.filename,
+        profileImage: req.file.filename,
         userType,
         password: hashPassword,
       });
@@ -53,7 +48,6 @@ export const registerUser = async (req, res) => {
  * API: http://localhost:5000/api/auth/login
  */
 export const loginUser = async (req, res) => {
-  // TODO: User Email, Password Validation Needed
   const { email, password } = req.body;
 
   const isUser = await UserModel.findOne({ email });

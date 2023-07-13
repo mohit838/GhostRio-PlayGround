@@ -2,6 +2,11 @@
 
 My Own Playground
 
+## MY TODO'S
+
+    1. Add fields validation for reg and login
+    2. Decrease upload image size autometically
+
 ## SECRET KEY RANDOM GENERATOR
 
     openssl rand -base64 32
