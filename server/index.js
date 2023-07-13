@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { PORT } from "./config/envConfig.js";
 import connect from "./database/db.js";
-import dashboardRouters from "./routes/dashboardRouters.js";
+import storeRouters from "./routes/storeRouters.js";
 import userRouters from "./routes/userRoutes.js";
 
 /* CONFIGURATIONS */
@@ -17,7 +17,7 @@ app.use(cors());
 
 /* ALL ROUTES */
 app.use("/api/auth", userRouters);
-app.use("/api/user", dashboardRouters);
+app.use("/api/store", storeRouters);
 
 /* MONGOOSE AND SERVER SETUP */
 const SERVER_PORT = PORT || 5000;

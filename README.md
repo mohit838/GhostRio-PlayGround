@@ -91,7 +91,7 @@ These are just a few examples of MongoDB commands and operations. MongoDB provid
 ## Base Template For Controllers
 
     try {
-        if (isValuel) {
+        if (isValue) {
           //Other Functionalities
 
 
@@ -103,7 +103,7 @@ These are just a few examples of MongoDB commands and operations. MongoDB provid
         } else {
           return res.status(401).json({
             errors: [
-              { msg: `${isValuel} is not found!`, param: "isValuel", success: false },
+              { msg: `${isValue} is not found!`, param: "isValue", success: false },
             ],
           });
         }

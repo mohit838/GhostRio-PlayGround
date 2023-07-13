@@ -31,17 +31,29 @@ export const jwtTokenCreate = (user) => {
   });
 };
 
-//@FOR fILE STORAGE
-const storage = multer.diskStorage({
+//@FOR Profile Image STORAGE
+const profileStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/assets");
+    cb(null, "./public/assets/profile_image");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, file.originalname + "-" + uniqueSuffix);
   },
 });
-export const upload = multer({ storage });
+export const profileImageUpload = multer({ storage: profileStorage });
+
+//@FOR Store Image STORAGE
+const storeStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/assets/store_image");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.originalname + "-" + uniqueSuffix);
+  },
+});
+export const storeImageUpload = multer({ storage: storeStorage });
 
 //@FOR MAIL GENERATORS
 export const resetPasswordMail = async (name, email, token) => {

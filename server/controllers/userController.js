@@ -11,7 +11,7 @@ import UserModel from "../models/UserModel.js";
  * API: http://localhost:5000/api/auth/register
  */
 export const registerUser = async (req, res) => {
-  const { name, email, password, mobile, userType } = req.body;
+  const { name, email, password, mobile, isVendor, isAdmin } = req.body;
 
   const isEmail = await UserModel.findOne({ email });
   const isMobile = await UserModel.findOne({ mobile });
@@ -25,8 +25,9 @@ export const registerUser = async (req, res) => {
         email,
         mobile,
         profileImage: req.file.filename,
-        userType,
         password: hashPassword,
+        isVendor,
+        isAdmin,
       });
       // @JWT token
       const token = jwtTokenCreate({ id: newUser._id, name: newUser.name });
