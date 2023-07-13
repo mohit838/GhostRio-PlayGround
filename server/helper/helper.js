@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import express from "express";
 import jsonwebtoken from "jsonwebtoken";
 import multer from "multer";
+import { JWT_CODE } from "../config/envConfig.js";
 
 const app = express();
 app.use(express.static("public"));
@@ -24,7 +25,7 @@ export const matchingPassword = async (password, dbPassword) => {
 
 // @For JWT token generation
 export const jwtTokenCreate = (user) => {
-  return jsonwebtoken.sign(user, process.env.JWT_CODE, {
+  return jsonwebtoken.sign(user, JWT_CODE, {
     expiresIn: "3hr",
   });
 };

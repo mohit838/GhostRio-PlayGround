@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import { PORT } from "./config/envConfig.js";
 import connect from "./database/db.js";
 import dashboardRouters from "./routes/dashboardRouters.js";
 import userRouters from "./routes/userRoutes.js";
@@ -19,8 +20,10 @@ app.use("/api/auth", userRouters);
 app.use("/api/user", dashboardRouters);
 
 /* MONGOOSE AND SERVER SETUP */
-const PORT = process.env.PORT || 5000;
+const SERVER_PORT = PORT || 5000;
 
 connect().then(() => {
-  app.listen(PORT, () => console.log(`Server Running On Port: ${PORT}`));
+  app.listen(SERVER_PORT, () =>
+    console.log(`Server Running On Port: ${SERVER_PORT}`)
+  );
 });

@@ -37,3 +37,53 @@ My Own Playground
           },
         });
         const upload = multer({ storage });
+
+## Here are some commonly used MongoDB commands and operations
+
+1. **Querying Documents**:
+
+   - `find`: Retrieves multiple documents based on a query filter.
+   - `findOne`: Retrieves a single document based on a query filter.
+   - `findById`: Retrieves a document by its unique identifier.
+   - `count`: Counts the number of documents that match a query filter.
+
+2. **Inserting Documents**:
+
+   - `insertOne`: Inserts a single document into a collection.
+   - `insertMany`: Inserts multiple documents into a collection.
+
+3. **Updating Documents**:
+
+   - `updateOne`: Updates a single document that matches a query filter.
+   - `updateMany`: Updates multiple documents that match a query filter.
+   - `findByIdAndUpdate`: Finds a document by its unique identifier and updates it.
+   - `findOneAndUpdate`: Finds a single document that matches a query filter and updates it.
+
+4. **Deleting Documents**:
+
+   - `deleteOne`: Deletes a single document that matches a query filter.
+   - `deleteMany`: Deletes multiple documents that match a query filter.
+   - `findByIdAndDelete`: Finds a document by its unique identifier and deletes it.
+   - `findOneAndDelete`: Finds a single document that matches a query filter and deletes it.
+
+5. **Aggregation**:
+
+   - `aggregate`: Performs aggregation operations on the documents in a collection.
+   - Aggregation stages: `$match`, `$group`, `$sort`, `$project`, `$lookup`, `$unwind`, etc.
+
+6. **Indexes**:
+
+   - `createIndex`: Creates an index on a collection.
+   - `dropIndex`: Drops an index from a collection.
+
+7. **Transactions**:
+
+   - `startSession`: Starts a new session for multi-document transactions.
+   - `withTransaction`: Executes a set of operations within a transaction.
+
+8. **Others**:
+   - `distinct`: Returns an array of distinct values for a specified field.
+   - `aggregate`: Performs data aggregation operations on the documents in a collection.
+   - `bulkWrite`: Performs multiple write operations in bulk.
+
+These are just a few examples of MongoDB commands and operations. MongoDB provides a rich set of commands and features to interact with the database, and the available commands may vary depending on the MongoDB version and the specific driver or framework you are using. It's recommended to refer to the official MongoDB documentation for a comprehensive list of commands and their usage details.

@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
+import { MONGO_URL } from '../config/envConfig.js';
 
 async function connect() {
   try {
     mongoose.set('strictQuery', true);
-    const db = await mongoose.connect(process.env.MONGO_URL, {
+    const db = await mongoose.connect(MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

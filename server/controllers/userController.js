@@ -58,18 +58,69 @@ export const loginUser = async (req, res) => {
         // @JWT token
         const token = jwtTokenCreate({ id: isUser._id, name: isUser.name });
 
-        if (isUser.userType) {
+        if (isUser.isAdmin) {
           // If you want pass any kinds of users data from DB
-          return res.status(200).json({ token, userType: true, success: true });
+          return res.status(200).json({ token, isAdmin: true, success: true });
         } else {
           return res
             .status(200)
-            .json({ token, userType: false, success: false });
+            .json({ token, isAdmin: false, success: false });
         }
       } else {
         return res.status(401).json({
           errors: [
             { msg: "Password not matched!", param: "password", success: false },
+          ],
+        });
+      }
+    } else {
+      return res.status(401).json({
+        errors: [
+          { msg: `${email} is not found!`, param: "email", success: false },
+        ],
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Server Inernal error!");
+  }
+};
+
+/**
+ * API: http://localhost:5000/api/auth//update-password
+ */
+export const updatePassword = async (req, res) => {
+  const { userId, password } = req.body;
+
+  if (!userId) {
+    return res.status(500).json("No User Id Found!");
+  }
+
+  const isUser = await UserModel.findOne({ _id: userId });
+
+  try {
+    if (isUser) {
+      if (password) {
+        const newHashPassword = await hashedYourPassowrd(password);
+
+        const updateUserPassword = await UserModel.findByIdAndUpdate(
+          { _id: isUser._id },
+          {
+            $set: {
+              password: newHashPassword,
+            },
+          }
+        );
+
+        return res.status(200).json({
+          errors: [
+            { msg: "Password is updated!", param: "password", success: true },
+          ],
+        });
+      } else {
+        return res.status(401).json({
+          errors: [
+            { msg: "Password not update!", param: "password", success: false },
           ],
         });
       }

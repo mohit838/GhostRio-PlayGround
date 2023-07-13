@@ -1,11 +1,12 @@
 import jsonwebtoken from "jsonwebtoken";
+import { JWT_CODE } from "../config/envConfig.js";
 
 class Authorization {
   authorized(req, res, next) {
     const headerToken = req.headers.authorization;
     if (headerToken) {
       const token = headerToken.split("Bearer ")[1];
-      const verify = jsonwebtoken.verify(token, process.env.JWT_CODE);
+      const verify = jsonwebtoken.verify(token, JWT_CODE);
 
       if (verify) {
         next();
