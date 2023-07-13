@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
 import express from "express";
+import fs from "fs";
 import jsonwebtoken from "jsonwebtoken";
 import multer from "multer";
 import nodemailer from "nodemailer";
+import randomstring from "randomstring";
 import { BACKEND, EMAIL, JWT_CODE, PASSWORD } from "../config/envConfig.js";
 
 const app = express();
@@ -90,3 +92,24 @@ export const resetPasswordMail = async (name, email, token) => {
 };
 
 ("http://localhost:5000/api/auth/reset-password?token=${token}");
+
+// For Refresh Token
+export const reNewToken = async (id) => {
+  try {
+    const oldJWT = JWT_CODE;
+
+    const randomJWT = randomstring.generate();
+
+    const data = fs.readFileSync("config/envConfig.js", "utf-8");
+    const newJWT = data.replace(new RegExp(oldJWT, "g"), randomJWT);
+    fs.writeFileSync("config/envConfig.js", newJWT, "utf-8");
+
+    const newToken = await jsonwebtoken.sign({ _id: id }, randomJWT, {
+      expiresIn: "15s",
+    });
+    return newToken;
+  } catch (error) {
+    console.log(error.message);
+    return "Server Internal Error!";
+  }
+};

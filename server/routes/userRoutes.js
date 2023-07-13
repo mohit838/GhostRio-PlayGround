@@ -2,6 +2,7 @@ import express from "express";
 import {
   forgotPassword,
   loginUser,
+  refreshToken,
   registerUser,
   resetPassword,
   updatePassword,
@@ -17,6 +18,6 @@ router
   .post("/update-password", Auth.authorized, updatePassword)
   .post("/forgot-password", forgotPassword)
   .get("/reset-password", resetPassword)
-  .post("/refresh-token", refreshToken);
+  .post("/refresh-token", Auth.authorized, refreshToken);
 
 export default router;

@@ -3,6 +3,7 @@ import {
   hashedYourPassowrd,
   jwtTokenCreate,
   matchingPassword,
+  reNewToken,
   resetPasswordMail,
 } from "../helper/helper.js";
 import UserModel from "../models/UserModel.js";
@@ -232,6 +233,43 @@ export const resetPassword = async (req, res) => {
     } else {
       return res.status(404).json({
         errors: [{ msg: `Link Expired!`, param: "email", success: false }],
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Server Inernal error!");
+  }
+};
+
+/**
+ * API: http://localhost:5000/api/auth/refresh-token
+ */
+export const refreshToken = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const isUserData = await UserModel.findOne({ _id: userId });
+
+    if (isUserData) {
+      const generateRefreshToken = await reNewToken(userId);
+
+      const response = {
+        userId,
+        token: generateRefreshToken,
+      };
+      return res.status(200).json({
+        errors: [
+          {
+            msg: `refresh tokens!`,
+            param: "refesh",
+            success: true,
+            data: response,
+          },
+        ],
+      });
+    } else {
+      return res.status(404).json({
+        errors: [{ msg: `Expired!`, param: "refesh", success: false }],
       });
     }
   } catch (error) {
