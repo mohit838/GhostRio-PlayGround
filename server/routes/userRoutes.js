@@ -16,6 +16,7 @@ router
   .post("/login", loginUser)
   .post("/update-password", Auth.authorized, updatePassword)
   .post("/forgot-password", forgotPassword)
-  .get("/reset-password", resetPassword);
+  .get("/reset-password", resetPassword)
+  .post("/refresh-token", refreshToken);
 
 export default router;
