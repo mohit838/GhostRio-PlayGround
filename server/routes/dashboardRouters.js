@@ -1,10 +1,9 @@
 import { Router } from "express";
+import { userDashboard } from "../controllers/dashboardControllers.js";
 import auth from "../middleware/auth.js";
 
 const router = Router();
 
-router.get("/details", auth, (req, res) => {
-  res.status(200).json({ message: "user authenticated." });
-});
+router.get("/dashboard", auth, userDashboard);
 
 export default router;

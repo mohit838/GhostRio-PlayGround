@@ -1,6 +1,4 @@
-import mongoose from "mongoose";
-
-const Schema = mongoose.Schema;
+import mongoose, { Schema } from "mongoose";
 
 const userTokenSchema = new Schema(
   {
@@ -15,7 +13,7 @@ const userTokenSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      expires: 30 * 86400, // 30 days
+      expires: 30 * 86400, // 30 days to expire
     },
   },
   { timestamps: true }

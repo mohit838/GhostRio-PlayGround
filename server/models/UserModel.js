@@ -1,6 +1,4 @@
-import mongoose from "mongoose";
-
-const Schema = mongoose.Schema;
+import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
@@ -19,7 +17,7 @@ const userSchema = new Schema(
     },
     roles: {
       type: [String],
-      enum: ["user", "admin", "super_admin"],
+      enum: ["user", "admin", "super_admin", "vendor"],
       default: ["user"],
     },
   },

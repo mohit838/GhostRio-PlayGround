@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
   if (!token)
     return res
       .status(403)
-      .json({ error: true, message: "Access Denied: No token provided" });
+      .json({ error: true, message: "Access Denied: No token provided!!" });
 
   try {
     const tokenDetails = jwt.verify(token, ACCESS_TOKEN);
@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
     console.log(err);
     res
       .status(403)
-      .json({ error: true, message: "Access Denied: Invalid token" });
+      .json({ error: true, message: "Access Denied: Invalid token!!" });
   }
 };
 
