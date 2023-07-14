@@ -1,12 +1,22 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./componetnts/Home";
+import Dashboard from "./componetnts/Dashboard";
+import Login from "./componetnts/Login";
+import Regiser from "./componetnts/Regiser";
 
-/** root routes */
+// All routes
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home></Home>,
+    element: <Dashboard></Dashboard>,
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
+    path: "/register",
+    element: <Regiser></Regiser>,
   },
 ]);
 
