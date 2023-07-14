@@ -12,6 +12,7 @@ import verifyRefreshToken from "../utils/verifyRefreshToken.js";
  * @param {error: false, message: "Account created sucessfully!!"} res
  * @returns
  */
+
 export const registerUser = async (req, res) => {
   try {
     const { error } = validations.signUpBodyValidation(req.body);
@@ -58,6 +59,7 @@ export const registerUser = async (req, res) => {
  * @param {error: false, message: "Logged in sucessfully!"} res
  * @returns
  */
+
 export const logInUser = async (req, res) => {
   try {
     const { error } = validations.logInBodyValidation(req.body);
@@ -104,6 +106,7 @@ export const logInUser = async (req, res) => {
  * @param {error: false, message: "Access token created successfully!!"} res
  * @returns
  */
+
 export const refreshToken = async (req, res) => {
   const { error } = validations.refreshTokenBodyValidation(req.body);
   if (error)
@@ -131,6 +134,7 @@ export const refreshToken = async (req, res) => {
  * @param {error: false, message: "Logged Out Sucessfully!!"} res
  * @returns
  */
+
 export const logOut = async (req, res) => {
   try {
     const { error } = validations.refreshTokenBodyValidation(req.body);
