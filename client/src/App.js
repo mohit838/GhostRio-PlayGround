@@ -22,7 +22,7 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <main>
+    <main className="loginForm">
       <RouterProvider router={router}></RouterProvider>
     </main>
   );

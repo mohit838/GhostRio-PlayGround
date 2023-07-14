@@ -1,12 +1,22 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Nav from "./common/Nav";
 
 const Dashboard = () => {
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get("http://localhost:7000/api/dashboard");
+      setName(response.data.message);
+    })();
+  }, []);
+
   return (
     <div className="loginForm">
       <Nav />
       <h2>Dashboard</h2>
-      <h1>Here is your User Name: </h1>
+      <h1>Here is your User Name: {name} </h1>
     </div>
   );
 };

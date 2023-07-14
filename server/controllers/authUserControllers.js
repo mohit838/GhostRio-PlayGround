@@ -94,6 +94,12 @@ export const logInUser = async (req, res) => {
       accessToken,
       refreshToken,
       message: "Logged in sucessfully!!",
+      user: [
+        {
+          name: user.userName,
+          email: user.email,
+        },
+      ],
     });
   } catch (err) {
     console.log(err);
