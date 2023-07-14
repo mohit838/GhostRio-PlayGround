@@ -11,14 +11,11 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:7000/api/auth/view/register",
-        {
-          userName: username,
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("auth/view/register", {
+        userName: username,
+        email,
+        password,
+      });
       console.log(response.data); // Handle the response as needed
     } catch (error) {
       console.error(error);

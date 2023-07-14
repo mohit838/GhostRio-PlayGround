@@ -7,8 +7,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get("http://localhost:7000/api/dashboard");
-      setName(response.data.message);
+      const response = await axios.get("dashboard");
+      setName(response.data?.message);
     })();
   }, []);
 

@@ -13,11 +13,12 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:7000/api/auth/view/login",
+        "auth/view/login",
         {
           email,
           password,
         },
+        //NOTE:: When you set { withCredentials: true }, it enables the sending of cookies or other credentials along with the request. This can be useful when you're working with sessions or authentication mechanisms that rely on cookies or other types of credentials for identification and authorization.
         { withCredentials: true }
       );
 

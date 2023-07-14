@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { SALT } from "../config/envConfig.js";
+import { ACCESS_TOKEN, SALT } from "../config/envConfig.js";
 import User from "../models/UserModel.js";
 import UserToken from "../models/UserTokenModel.js";
 import generateTokens from "../utils/generateTokens.js";
@@ -108,7 +108,7 @@ export const logInUser = async (req, res) => {
 };
 
 /**
- * @param {POST: http://localhost:7000/api/auth/view/refresh-token} req
+ * @param {POST: http://localhost:7000/api/auth/refresh-token} req
  * @param {error: false, message: "Access token created successfully!!"} res
  * @returns
  */
@@ -123,20 +123,18 @@ export const refreshToken = async (req, res) => {
   verifyRefreshToken(req.body.refreshToken)
     .then(({ tokenDetails }) => {
       const payload = { _id: tokenDetails._id, roles: tokenDetails.roles };
-
       const accessToken = jwt.sign(payload, ACCESS_TOKEN, { expiresIn: "15m" });
-
       res.status(200).json({
         error: false,
         accessToken,
-        message: "Access token created successfully!!",
+        message: "Access token created successfully",
       });
     })
     .catch((err) => res.status(400).json(err));
 };
 
 /**
- * @param {POST: http://localhost:7000/api/auth/view/refresh-token} req
+ * @param {POST: http://localhost:7000/api/auth/refresh-token} req
  * @param {error: false, message: "Logged Out Sucessfully!!"} res
  * @returns
  */
