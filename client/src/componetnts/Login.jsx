@@ -13,7 +13,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "auth/view/login",
+        "login",
         {
           email,
           password,

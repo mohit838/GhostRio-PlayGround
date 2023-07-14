@@ -10,7 +10,7 @@ axios.interceptors.response.use(
 
       if (refreshToken) {
         const response = await axios.post(
-          "auth/refresh-token",
+          "refresh-token",
           { refreshToken },
           { withCredentials: true }
         );
