@@ -1,8 +1,9 @@
+import { REFRESH_TOKEN } from "../config/envConfig.js";
 import UserToken from "../models/UserToken.js";
 import jwt from "jsonwebtoken";
 
 const verifyRefreshToken = (refreshToken) => {
-	const privateKey = process.env.REFRESH_TOKEN_PRIVATE_KEY;
+	const privateKey = REFRESH_TOKEN;
 
 	return new Promise((resolve, reject) => {
 		UserToken.findOne({ token: refreshToken }, (err, doc) => {

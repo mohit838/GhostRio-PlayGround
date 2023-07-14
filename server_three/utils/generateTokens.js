@@ -1,17 +1,18 @@
 import jwt from "jsonwebtoken";
 import UserToken from "../models/UserToken.js";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../config/envConfig.js";
 
 const generateTokens = async (user) => {
 	try {
 		const payload = { _id: user._id, roles: user.roles };
 		const accessToken = jwt.sign(
 			payload,
-			process.env.ACCESS_TOKEN_PRIVATE_KEY,
+			ACCESS_TOKEN,
 			{ expiresIn: "14m" }
 		);
 		const refreshToken = jwt.sign(
 			payload,
-			process.env.REFRESH_TOKEN_PRIVATE_KEY,
+			REFRESH_TOKEN,
 			{ expiresIn: "30d" }
 		);
 
