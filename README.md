@@ -111,3 +111,7 @@ These are just a few examples of MongoDB commands and operations. MongoDB provid
         console.log(error.message);
         return res.status(500).json("Server Inernal error!");
       }
+
+## Study Materials TUT
+
+      npm i express nodemon cors dotenv mongoose multer bcrypt jsonwebtoken body-parser nodemailer randomstring joi joi-password-complexity
