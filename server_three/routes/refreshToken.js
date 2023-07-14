@@ -3,6 +3,7 @@ import UserToken from "../models/UserToken.js";
 import jwt from "jsonwebtoken";
 import verifyRefreshToken from "../utils/verifyRefreshToken.js";
 import { refreshTokenBodyValidation } from "../utils/validationSchema.js";
+import { ACCESS_TOKEN } from "../config/envConfig.js";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
 			const payload = { _id: tokenDetails._id, roles: tokenDetails.roles };
 			const accessToken = jwt.sign(
 				payload,
-				process.env.ACCESS_TOKEN_PRIVATE_KEY,
+				ACCESS_TOKEN,
 				{ expiresIn: "14m" }
 			);
 			res.status(200).json({
