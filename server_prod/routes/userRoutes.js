@@ -1,9 +1,9 @@
 import express from "express";
 import * as userController from "../controllers/userControllers.js";
-import {userMiddleware} from "../middlewares/uesrMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/users',userMiddleware, userController.allUsers);
+router.get("/users", authMiddleware, userController.allUsers);
 
-export default router
+export default router;
