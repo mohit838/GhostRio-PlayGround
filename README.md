@@ -88,6 +88,55 @@ My Own Playground
 
 These are just a few examples of MongoDB commands and operations. MongoDB provides a rich set of commands and features to interact with the database, and the available commands may vary depending on the MongoDB version and the specific driver or framework you are using. It's recommended to refer to the official MongoDB documentation for a comprehensive list of commands and their usage details.
 
+## Basic STATUS Code
+
+Here are some commonly used HTTP status codes that you may encounter in backend development:
+
+1. **Informational Responses (1xx):**
+
+- `100 Continue`
+- `101 Switching Protocols`
+- `102 Processing`
+
+2. **Successful Responses (2xx):**
+
+- `200 OK`
+- `201 Created`
+- `202 Accepted`
+- `204 No Content`
+
+3. **Redirection Messages (3xx):**
+
+- `300 Multiple Choices`
+- `301 Moved Permanently`
+- `302 Found`
+- `304 Not Modified`
+- `307 Temporary Redirect`
+- `308 Permanent Redirect`
+
+4. **Client Error Responses (4xx):**
+
+- `400 Bad Request`
+- `401 Unauthorized`
+- `403 Forbidden`
+- `404 Not Found`
+- `409 Conflict`
+- `422 Unprocessable Entity`
+- `429 Too Many Requests`
+
+5. **Server Error Responses (5xx):**
+
+- `500 Internal Server Error`
+- `501 Not Implemented`
+- `502 Bad Gateway`
+- `503 Service Unavailable`
+- `504 Gateway Timeout`
+- `505 HTTP Version Not Supported`
+
+These are just a few examples of common status codes. There are many more status codes available for specific scenarios or custom use cases. It's important to choose the appropriate status code that accurately reflects the outcome of the request.
+
+Please note that the appropriate status code to use depends on the specific situation and the HTTP specification. Always consult the HTTP specification or relevant documentation for more detailed information on each status code.
+
 ## Base Template For Controllers
 
     try {
@@ -112,10 +161,8 @@ These are just a few examples of MongoDB commands and operations. MongoDB provid
         return res.status(500).json("Server Inernal error!");
       }
 
-
 ## All Routers Can Declear At a Time
 
-       
     const routerPath = readdirSync("./routes");
     routerPath.forEach(async (route) => {
        try {
