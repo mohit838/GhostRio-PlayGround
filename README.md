@@ -112,6 +112,20 @@ These are just a few examples of MongoDB commands and operations. MongoDB provid
         return res.status(500).json("Server Inernal error!");
       }
 
+
+## All Routers Can Declear At a Time
+
+       
+    const routerPath = readdirSync("./routes");
+    routerPath.forEach(async (route) => {
+       try {
+            const routeModule = await import(`./routes/${route}`);
+           app.use("/api", routeModule.default);
+        } catch (error) {
+           console.error(`Error importing route module ${route}:`, error);
+      }
+    });
+
 ## Study Materials TUT
 
       npm i express nodemon cors dotenv mongoose multer bcrypt jsonwebtoken body-parser nodemailer randomstring joi joi-password-complexity
