@@ -1,4 +1,4 @@
-import { config } from "dotenv";
+import {config} from "dotenv";
 import express from "express";
 import dbConnect from "./dbConnect.js";
 import authRoutes from "./routes/auth.js";
@@ -7,21 +7,19 @@ import userRoutes from "./routes/users.js";
 
 const app = express();
 
-
-
 config();
 dbConnect();
 
 app.use(express.json());
-// Set CORS headers
+
+// Set CORS headers Not To Set Any Wildcard Options
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
-  });
-  
+});
 
 app.use("/api", authRoutes);
 app.use("/api/refreshToken", refreshTokenRoutes);
