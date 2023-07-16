@@ -131,11 +131,11 @@ export const userLogIn = async (req, res) => {
   }
 };
 
-// POST: http://localhost:7000/api/update-password
+// POST: http://localhost:7000/api/refresh-token
 /**{
-  "password": "Tread@1234567"
+  "Authorization": "old-refresh-token"
 } */
-export const updatePassword = async (req, res) => {
+export const refreshToken = async (req, res) => {
   try {
     res.status(200).json({
       success: true,
