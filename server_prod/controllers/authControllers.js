@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config/config.js";
 import * as helper from "../helper/helper.js";
 import User from "../models/UserModel.js";
@@ -141,41 +141,40 @@ export const refreshToken = async (req, res) => {
   // Get Access token form header-Authorization
   // Verify token
   // Generate token
-
   try {
-
     const { error } = helper.refreshTokenValidation(req.body);
 
-    if(!error){
+    if (error) {
+      res.status(401).json({
+        success: false,
+        msg: error.details[0].message,
+      });
+    } else {
       // Now Verify the token if its valid string
-      const verifyingRfToken = await helper.verifyRefreshToken(req.body.refreshToken);
+      const verifyingRfToken = await helper.verifyRefreshToken(
+        req.body.refreshToken
+      );
 
-      if(verifyingRfToken){
-        const payload = { _id: verifyingRfToken.tokenDetails._id, roles: verifyingRfToken.tokenDetails.roles };
-			const accessToken = jwt.sign(
-				payload,ACCESS_TOKEN,
-				{ expiresIn: "15m" }
-			);
-			res.status(201).json({
-				success: false,
-				msg: "Access token created successfully",
-				accessToken,
-			});
-
-      }else{
+      if (verifyingRfToken) {
+        const payload = {
+          _id: verifyingRfToken.tokenDetails._id,
+          roles: verifyingRfToken.tokenDetails.roles,
+        };
+        const accessToken = await jwt.sign(payload, ACCESS_TOKEN, {
+          expiresIn: "15m",
+        });
+        res.status(201).json({
+          success: false,
+          msg: "Access token created successfully!!",
+          accessToken,
+        });
+      } else {
         res.status(200).json({
           success: false,
           msg: "Unauthorized Token!!",
         });
       }
-    }else{
-      res.status(401).json({
-        success: false,
-        msg: error.details[0].message,
-      });
     }
-
-    
   } catch (e) {
     console.log(e);
     res.status(500).json({
