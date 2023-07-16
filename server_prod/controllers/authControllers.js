@@ -136,6 +136,10 @@ export const userLogIn = async (req, res) => {
   "Authorization": "old-refresh-token"
 } */
 export const refreshToken = async (req, res) => {
+  // Get Access token form header-Authorization
+  // Verify token
+  // Generate token
+
   try {
     res.status(200).json({
       success: true,
