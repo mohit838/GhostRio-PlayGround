@@ -48,6 +48,15 @@ export const logInValidations = (body) => {
   return schema.validate(body);
 };
 
+// Refresh token validations
+export const refreshTokenValidation = (body) => {
+  const schema = Joi.object({
+    refreshToken: Joi.string().required().label("Token"),
+  });
+
+  return schema.validate(body);
+};
+
 // Hashing and Matching Password
 export const hashingStrongPassword = async (password) => {
   const salt = await bcrypt.genSalt(Number(SALT));
@@ -83,57 +92,25 @@ export const generateTokens = async (user) => {
   }
 };
 
-// export const updatePassValidation = async (body) => {};
+// verifyRefreshToken
+export const verifyRefreshToken = async (refreshToken) => {
+  try {
+    const doc = await UserToken.findOne({ token: refreshToken });
 
+    if (!doc) {
+      throw { success: true, msg: "Invalid refresh token" };
+    }
 
-
-// const verifyRefreshToken = (refreshToken) => {
-// 	const privateKey = process.env.REFRESH_TOKEN_PRIVATE_KEY;
-
-// 	return new Promise((resolve, reject) => {
-// 		UserToken.findOne({ token: refreshToken }, (err, doc) => {
-// 			if (!doc)
-// 				return reject({ error: true, message: "Invalid refresh token" });
-
-// 			jwt.verify(refreshToken, privateKey, (err, tokenDetails) => {
-// 				if (err)
-// 					return reject({ error: true, message: "Invalid refresh token" });
-// 				resolve({
-// 					tokenDetails,
-// 					error: false,
-// 					message: "Valid refresh token",
-// 				});
-// 			});
-// 		});
-// 	});
-// };
-
-// export default verifyRefreshToken;
-
-// get new access token
-// router.post("/", async (req, res) => {
-// 	const { error } = refreshTokenBodyValidation(req.body);
-// 	if (error)
-// 		return res
-// 			.status(400)
-// 			.json({ error: true, message: error.details[0].message });
-
-// 	verifyRefreshToken(req.body.refreshToken)
-// 		.then(({ tokenDetails }) => {
-// 			const payload = { _id: tokenDetails._id, roles: tokenDetails.roles };
-// 			const accessToken = jwt.sign(
-// 				payload,
-// 				process.env.ACCESS_TOKEN_PRIVATE_KEY,
-// 				{ expiresIn: "14m" }
-// 			);
-// 			res.status(200).json({
-// 				error: false,
-// 				accessToken,
-// 				message: "Access token created successfully",
-// 			});
-// 		})
-// 		.catch((err) => res.status(400).json(err));
-// });
+    const tokenDetails = await jwt.verify(refreshToken, REFRESH_TOKEN);
+    return {
+      tokenDetails,
+      success: false,
+      message: "Valid refresh token",
+    };
+  } catch (err) {
+    throw { success: true, msg: "Invalid refresh token" };
+  }
+};
 
 // // logout
 // router.delete("/", async (req, res) => {
@@ -157,4 +134,3 @@ export const generateTokens = async (user) => {
 // 		res.status(500).json({ error: true, message: "Internal Server Error" });
 // 	}
 // });
-

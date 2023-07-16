@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+import { ACCESS_TOKEN } from "../config/config.js";
 import * as helper from "../helper/helper.js";
 import User from "../models/UserModel.js";
 
@@ -141,10 +143,39 @@ export const refreshToken = async (req, res) => {
   // Generate token
 
   try {
-    res.status(200).json({
-      success: true,
-      msg: "Later Update password!!",
-    });
+
+    const { error } = helper.refreshTokenValidation(req.body);
+
+    if(!error){
+      // Now Verify the token if its valid string
+      const verifyingRfToken = await helper.verifyRefreshToken(req.body.refreshToken);
+
+      if(verifyingRfToken){
+        const payload = { _id: verifyingRfToken.tokenDetails._id, roles: verifyingRfToken.tokenDetails.roles };
+			const accessToken = jwt.sign(
+				payload,ACCESS_TOKEN,
+				{ expiresIn: "15m" }
+			);
+			res.status(201).json({
+				success: false,
+				msg: "Access token created successfully",
+				accessToken,
+			});
+
+      }else{
+        res.status(200).json({
+          success: false,
+          msg: "Unauthorized Token!!",
+        });
+      }
+    }else{
+      res.status(401).json({
+        success: false,
+        msg: error.details[0].message,
+      });
+    }
+
+    
   } catch (e) {
     console.log(e);
     res.status(500).json({
