@@ -28,12 +28,12 @@ const Login = () => {
 
       console.log(data); // Handle the response as needed
 
-      if (data?.error === false) {
+      if (data?.success === true) {
         setNavigate(true);
       }
 
       // Store the refresh token in session storage
-      sessionStorage.setItem("refreshToken", data.refreshToken);
+      sessionStorage.setItem("refreshToken", data?.refreshToken);
     } catch (error) {
       console.error(error);
     }

@@ -6,15 +6,17 @@ const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post("signup", {
-        userName: username,
+        username,
         email,
         password,
+        repeat_password: repeatPassword,
       });
       console.log(response.data); // Handle the response as needed
     } catch (error) {
@@ -44,6 +46,12 @@ const RegisterForm = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Repeat Password"
+          value={repeatPassword}
+          onChange={(e) => setRepeatPassword(e.target.value)}
         />
         <button type="submit">Register</button>
       </form>

@@ -8,14 +8,8 @@ export const authMiddleware = async (req, res, next) => {
     if (headerToken) {
       const token = headerToken.split("Bearer ")[1];
 
-      if (!token)
-        return res
-          .status(401)
-          .json({ success: true, msg: "Access Denied: No token provided!!" });
-
       try {
-        const tokenDetails = jsonwebtoken.verify(token, ACCESS_TOKEN);
-        req.user = tokenDetails;
+        req.user = jsonwebtoken.verify(token, ACCESS_TOKEN);
         next();
       } catch (err) {
         console.log(err);
