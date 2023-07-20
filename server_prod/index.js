@@ -1,17 +1,16 @@
-import bodyParser from "body-parser"; // remove This body parser
 import cors from "cors";
 import express from "express";
 import { readdirSync } from "fs";
+import helmet from "helmet";
 import { PORT } from "./config/config.js";
 import connect from "./db/db.js";
-import {Helmet} from "react-helmet";
 
 // Base Configurations
 const app = express();
 app.use(express.json());
 
 // Enabling the Helmet middleware
-app.use(Helmet())
+app.use(helmet());
 
 // Use Express built-in middleware
 app.use(express.json({ limit: "30mb" }));

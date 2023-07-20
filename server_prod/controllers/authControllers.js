@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config/config.js";
 import * as helper from "../helper/helper.js";
 import User from "../models/UserModel.js";
+import UserToken from "../models/userTokenModel.js";
 
 // POST: http://localhost:7000/api/signup
 /**{
@@ -138,27 +139,65 @@ export const userLogIn = async (req, res) => {
   "Authorization": "old-refresh-token"
 } */
 export const refreshToken = async (req, res) => {
-  const { error } = helper.refreshTokenValidation(req.body);
+  try {
+    const { error } = helper.refreshTokenValidation(req.body);
 
-  if (!error) {
-    helper
-      .verifyRefreshToken(req.body.refreshToken)
-      .then(({ tokenDetails }) => {
-        const payload = { _id: tokenDetails._id, roles: tokenDetails.roles };
-        const accessToken = jwt.sign(payload, ACCESS_TOKEN, {
-          expiresIn: "15m",
-        });
+    if (!error) {
+      helper
+        .verifyRefreshToken(req.body.refreshToken)
+        .then(({ tokenDetails }) => {
+          const payload = { _id: tokenDetails._id, roles: tokenDetails.roles };
+          const accessToken = jwt.sign(payload, ACCESS_TOKEN, {
+            expiresIn: "15m",
+          });
 
-        res.status(200).json({
-          error: false,
-          accessToken,
-          message: "Access token created successfully",
-        });
-      })
-      .catch((err) => res.status(400).json(err));
-  } else {
+          res.status(200).json({
+            error: false,
+            accessToken,
+            msg: "Access token created successfully",
+          });
+        })
+        .catch((err) => res.status(400).json(err));
+    } else {
+      return res
+        .status(400)
+        .json({ error: true, msg: error.details[0].message });
+    }
+  } catch (err) {
+    console.log(err);
     return res
-      .status(400)
-      .json({ error: true, message: error.details[0].message });
+      .status(500)
+      .json({ success: true, msg: "Internal Server Error!!" });
+  }
+};
+
+// POST: http://localhost:7000/api/logout
+/**{
+  "Authorization": "remove-token"
+} */
+export const logOutUser = async (req, res) => {
+  try {
+    const { error } = helper.refreshTokenValidation(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ success: true, msg: error.details[0].message });
+    }
+
+    const userToken = await UserToken.findOne({ token: req.body.refreshToken });
+    if (!userToken) {
+      return res
+        .status(200)
+        .json({ success: true, msg: "Logged Out Successfully!!" });
+    }
+
+    await UserToken.deleteOne({ token: req.body.refreshToken });
+
+    return res
+      .status(200)
+      .json({ success: true, msg: "Logged Out Successfully!!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ success: false, msg: "NS In Problem!!" });
   }
 };
