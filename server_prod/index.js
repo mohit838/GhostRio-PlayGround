@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 // Enabling the Helmet middleware
-app.use(helmet())
+app.use(Helmet())
 
 // Use Express built-in middleware
 app.use(express.json({ limit: "30mb" }));
