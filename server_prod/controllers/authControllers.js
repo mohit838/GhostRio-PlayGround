@@ -61,10 +61,10 @@ export const userSignUp = async (req, res) => {
       });
     }
   } catch (e) {
-    console.log(e);
     res.status(500).json({
       success: false,
       msg: "NS In Problem!!",
+      catch: e,
     });
   }
 };
@@ -126,10 +126,10 @@ export const userLogIn = async (req, res) => {
       });
     }
   } catch (e) {
-    console.log(e);
     res.status(500).json({
       success: false,
       msg: "NS In Problem!!",
+      catch: e,
     });
   }
 };
@@ -152,22 +152,26 @@ export const refreshToken = async (req, res) => {
           });
 
           res.status(200).json({
-            error: false,
+            success: false,
             accessToken,
             msg: "Access token created successfully",
           });
         })
-        .catch((err) => res.status(400).json(err));
+        .catch((err) =>
+          res.status(400).json({
+            success: true,
+            msg: err,
+          })
+        );
     } else {
       return res
         .status(400)
-        .json({ error: true, msg: error.details[0].message });
+        .json({ success: true, msg: error.details[0].message });
     }
-  } catch (err) {
-    console.log(err);
+  } catch (e) {
     return res
       .status(500)
-      .json({ success: true, msg: "Internal Server Error!!" });
+      .json({ success: false, msg: "Internal Server Error!!", catch: e });
   }
 };
 
@@ -196,8 +200,9 @@ export const logOutUser = async (req, res) => {
     return res
       .status(200)
       .json({ success: true, msg: "Logged Out Successfully!!" });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ success: false, msg: "NS In Problem!!" });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ success: false, msg: "NS In Problem!!", catch: e });
   }
 };
