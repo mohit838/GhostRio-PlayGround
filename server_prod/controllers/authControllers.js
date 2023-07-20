@@ -182,24 +182,22 @@ export const refreshToken = async (req, res) => {
 export const logOutUser = async (req, res) => {
   try {
     const { error } = helper.refreshTokenValidation(req.body);
-    if (error) {
+    if (!error) {
+      const userToken = await UserToken.findOne({token: req.body.refreshToken});
+      if (!userToken) {
+        return res
+            .status(200)
+            .json({success: true, msg: "Logged Out Successfully!!"});
+      }
+      await UserToken.deleteOne({token: req.body.refreshToken});
       return res
-        .status(400)
-        .json({ success: true, msg: error.details[0].message });
-    }
-
-    const userToken = await UserToken.findOne({ token: req.body.refreshToken });
-    if (!userToken) {
+          .status(200)
+          .json({success: true, msg: "Logged Out Successfully!!"});
+    } else {
       return res
-        .status(200)
-        .json({ success: true, msg: "Logged Out Successfully!!" });
+          .status(400)
+          .json({success: true, msg: error.details[0].message});
     }
-
-    await UserToken.deleteOne({ token: req.body.refreshToken });
-
-    return res
-      .status(200)
-      .json({ success: true, msg: "Logged Out Successfully!!" });
   } catch (e) {
     return res
       .status(500)
