@@ -2,7 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./componetnts/Dashboard";
 import Login from "./componetnts/Login";
-import Regiser from "./componetnts/Regiser";
+import Register from "./componetnts/Register";
 
 // All routes
 const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Regiser></Regiser>,
+    element: <Register></Register>,
   },
 ]);
 

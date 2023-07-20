@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Nav from "./common/Nav";
 
-const RegisterForm = () => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,4 +59,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default Register;
