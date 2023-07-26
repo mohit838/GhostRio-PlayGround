@@ -1,8 +1,10 @@
 class Person {
-  name = "p1";
-  email = "p1@mail.com";
+  constructor(name, email) {
+    this.name = name;
+    this.email = email;
+  }
 }
 
-const p1 = new Person();
+const p1 = new Person("cat", "mail@mail.com");
 
 console.log(p1);
