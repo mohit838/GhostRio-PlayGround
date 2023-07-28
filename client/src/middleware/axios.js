@@ -15,7 +15,7 @@ axios.interceptors.response.use(
           { withCredentials: true }
         );
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           const { accessToken } = response?.data;
 
           axios.defaults.headers.common[

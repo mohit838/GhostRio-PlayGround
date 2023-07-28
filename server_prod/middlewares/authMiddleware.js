@@ -15,14 +15,14 @@ export const authMiddleware = async (req, res, next) => {
         console.log(err);
         res
           .status(401)
-          .json({ success: true, msg: "Access Denied: Invalid token!!" });
+          .json({ success: false, msg: "Access Denied: Invalid token!!" });
       }
     } else {
       res
         .status(401)
-        .json({ success: true, msg: "Access Denied: Invalid token!!" });
+        .json({ success: false, msg: "Access Denied: Invalid token!!" });
     }
   } catch (error) {
-    res.status(500).json({ success: true, msg: "NS Has been in problem!!" });
+    res.status(500).json({ success: false, msg: "NS Has been in problem!!" });
   }
 };

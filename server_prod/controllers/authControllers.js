@@ -109,7 +109,7 @@ export const userLogIn = async (req, res) => {
           });
         } else {
           res.status(401).json({
-            success: true,
+            success: false,
             msg: "Password Doesn't Match!!",
           });
         }
@@ -151,22 +151,22 @@ export const refreshToken = async (req, res) => {
             expiresIn: "15m",
           });
 
-          res.status(200).json({
-            success: false,
+          res.status(201).json({
+            success: true,
             accessToken,
             msg: "Access token created successfully",
           });
         })
         .catch((err) =>
           res.status(400).json({
-            success: true,
+            success: false,
             msg: err,
           })
         );
     } else {
       return res
         .status(400)
-        .json({ success: true, msg: error.details[0].message });
+        .json({ success: false, msg: error.details[0].message });
     }
   } catch (e) {
     return res
@@ -196,7 +196,7 @@ export const logOutUser = async (req, res) => {
     } else {
       return res
           .status(400)
-          .json({success: true, msg: error.details[0].message});
+          .json({success: false, msg: error.details[0].message});
     }
   } catch (e) {
     return res
